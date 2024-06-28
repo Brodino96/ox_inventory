@@ -1677,27 +1677,28 @@ RegisterNUICallback('giveItem', function(data, cb)
 		for i = 1, #nearbyPlayers do
 			local option = nearbyPlayers[i]
 
-            if isGiveTargetValid(option.ped, option.coords) then
+			if isGiveTargetValid(option.ped, option.coords) then
 				local playerName = GetPlayerName(option.id)
 				option.id = GetPlayerServerId(option.id)
-                ---@diagnostic disable-next-line: inject-field
-				option.label = ('[%s] %s'):format(option.id, playerName)
+				---@diagnostic disable-next-line: inject-field
+				option.title = ('[%s] %s'):format(option.id, playerName)
+				option.onSelect = function ()
+					giveItemToTarget(option.id, data.slot, data.count)
+				end
 				n += 1
 				giveList[n] = option
 			end
 		end
 
-        if n == 0 then return end
+		if n == 0 then return end
 
-		lib.registerMenu({
+		lib.registerContext({
 			id = 'ox_inventory:givePlayerList',
 			title = 'Give item',
-			options = giveList,
-		}, function(selected)
-            giveItemToTarget(giveList[selected].id, data.slot, data.count)
-        end)
+			options = giveList
+		})
 
-		return lib.showMenu('ox_inventory:givePlayerList')
+		return lib.showContext('ox_inventory:givePlayerList')
 	end
 
     if cache.vehicle then
