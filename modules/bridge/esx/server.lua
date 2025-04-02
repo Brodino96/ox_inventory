@@ -123,6 +123,10 @@ function server.isPlayerBoss(playerId)
 	return xPlayer.job.grade_name == 'boss'
 end
 
+function server.getPlayerName(playerId)
+	return ESX.GetPlayerFromId(playerId).getName()
+end
+
 MySQL.ready(function()
 	MySQL.insert('INSERT IGNORE INTO `licenses` (`type`, `label`) VALUES (?, ?)', { 'weapon', 'Weapon License'})
 end)

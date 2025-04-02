@@ -1704,7 +1704,7 @@ RegisterNUICallback('giveItem', function(data, cb)
 			local option = nearbyPlayers[i]
 
 			if isGiveTargetValid(option.ped, option.coords) then
-				local playerName = GetPlayerName(option.id)
+				local playerName = lib.callback.await("ox_inventory:getPlayerName")
 				option.id = GetPlayerServerId(option.id)
 				---@diagnostic disable-next-line: inject-field
 				option.title = ('[%s] %s'):format(option.id, playerName)

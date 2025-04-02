@@ -516,6 +516,10 @@ lib.callback.register('ox_inventory:useItem', function(source, itemName, slot, m
 	end
 end)
 
+lib.callback.register("ox_inventory:getPlayerName", function (source)
+	return server.getPlayerName(source)
+end)
+
 local function conversionScript()
 	shared.ready = false
 
